@@ -1,7 +1,12 @@
+const { v4: uuidv4 } = require('uuid');
 
 exports.up = function(knex) {
     return knex.schema.createTable('users', tbl => {
-        tbl.increments();
+        tbl.uuid('id')
+            .primary()
+            .unique()
+            .notNullable()
+            .defaultTo(uuidv4());
 
         tbl.string('username', 128)
             .unique()
