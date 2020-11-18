@@ -20,10 +20,10 @@ function getById(id) {
 };
 
 function findBy(filter) {
-    return db('users').where(filter);
+    return db('users').where(filter).first();
 }
 
-function add(user) {
+async function add(user) {
     return db('users')
         .insert(user, 'id')
         .then(([id]) => getById(id));

@@ -4,8 +4,10 @@ const bcrypt = require("bcryptjs");
 const Users = require('../models/users-model');
 const generateToken = require('./generateToken');
 
+const { userNameDupe, emailDupe } = require('../middleware/userDupes');
+
 // REGISTER A NEW USER
-router.post('/register', (req, res) => {
+router.post('/register', userNameDupe, emailDupe, (req, res) => {
     const user = req.body;
     
     const hashedPassword = bcrypt.hashSync(user.password, 12);

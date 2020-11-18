@@ -1,12 +1,12 @@
-const { v4: uuidv4 } = require('uuid');
 
-exports.up = function(knex) {
+exports.up = async function(knex) {
+    await knex.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
     return knex.schema.createTable('users', tbl => {
         tbl.uuid('id')
             .primary()
             .unique()
             .notNullable()
-            .defaultTo(uuidv4());
+            .defaultTo(knex.raw('uuid_generate_v4()'));
 
         tbl.string('username', 128)
             .unique()
